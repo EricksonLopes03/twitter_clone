@@ -37,5 +37,21 @@
 
 
         }
+
+        public function quemSeguir(){
+            session_start();
+            if($_SESSION['id'] == '' && $_SESSION['nome'] == ''){ //protegendo página pessoal da aplicação
+                header('Location: /?login=erro');
+            }
+            $usuarios = array();
+            $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : ''; 
+            if($pesquisa != ''){
+                $usuario = Container::getModel('Usuario');
+                $usuario->__set('nome' , $pesquisa);
+                $usuarios = $usuario->getAll();
+            }
+            $this->view->usuarios = $usuarios;
+            $this->render('quemSeguir');
+        }
     }
 ?>
