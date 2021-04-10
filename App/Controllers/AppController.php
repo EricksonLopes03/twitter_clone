@@ -48,10 +48,28 @@
             if($pesquisa != ''){
                 $usuario = Container::getModel('Usuario');
                 $usuario->__set('nome' , $pesquisa);
+                $usuario->__set('id' , $_SESSION['id']);
                 $usuarios = $usuario->getAll();
             }
             $this->view->usuarios = $usuarios;
             $this->render('quemSeguir');
+        }
+
+        public function acao(){
+            session_start();
+            if($_SESSION['id'] == '' && $_SESSION['nome'] == ''){ //protegendo página pessoal da aplicação
+                header('Location: /?login=erro');
+            }
+            $acao = isset($_GET['acao']) ? $_GET['acao'] : '';
+            $id_usuario_seguido = isset($_GET['id']) ? $_GET['id'] : '';
+            $usuario = Container::getModel('Usuario');
+            $usuario->__set('id', $_SESSION['id']);
+            if($acao == 'seguir'){
+                $usuario->seguir($id_usuario_seguido);
+            }else{
+                $usuario->deixarDeSeguir($id_usuario_seguido);
+            }
+            header('Location: /quem_seguir');
         }
     }
 ?>
