@@ -16,6 +16,12 @@
                 $tweet->__set('id_usuario', $_SESSION['id']);
                 $tweets = $tweet->getAll();
                 $this->view->tweets = $tweets;
+                $usuario = Container::getModel('Usuario');
+                $usuario->__set('id', $_SESSION['id']);
+                $this->view->info_usuario = $usuario->getInfoUsuario();
+                $this->view->total_tweets = $usuario->getTotalTweets();
+                $this->view->total_seguindo = $usuario->getTotalUsuariosSeguindo();
+                $this->view->total_seguidores = $usuario->getTotalSeguidores();
                 $this->render('timeline');
             }
 
@@ -44,13 +50,17 @@
                 header('Location: /?login=erro');
             }
             $usuarios = array();
+            $usuario = $usuario = Container::getModel('Usuario');
+            $usuario->__set('id' , $_SESSION['id']);
             $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : ''; 
             if($pesquisa != ''){
-                $usuario = Container::getModel('Usuario');
                 $usuario->__set('nome' , $pesquisa);
-                $usuario->__set('id' , $_SESSION['id']);
                 $usuarios = $usuario->getAll();
             }
+            $this->view->info_usuario = $usuario->getInfoUsuario();
+            $this->view->total_tweets = $usuario->getTotalTweets();
+            $this->view->total_seguindo = $usuario->getTotalUsuariosSeguindo();
+            $this->view->total_seguidores = $usuario->getTotalSeguidores();
             $this->view->usuarios = $usuarios;
             $this->render('quemSeguir');
         }
