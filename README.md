@@ -20,6 +20,9 @@
 
 ## Como executar a aplicação
 
+* Git
+    * Com o Git instalado em sua mmáquina, navegue até o diretório de sua preferência, abra o terminal do seu sistema operacional neste diretório e execute o comando 
+    ``` git clone https://github.com/EricksonLopes03/twitter_clone.git ```. O download do projeto será realizado para sua máquina.
 * PHP
     * É necessário instalar o PHP 7.4 em sua máquina. Após a instalação, vá até o arquivo php.ini na pasta de instalação do PHP e apague o ";" da linha ";extension=pdo_mysql". Com isso, você ativa a biblioteca PDO que é usada na conexão com o MySQL. 
 * MySQL
